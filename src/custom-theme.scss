@@ -1,0 +1,17 @@
+@use '../node_modules/@angular/material/index' as mat;
+
+@include mat.core();
+$last-task-primary: mat.define-palette(#E1F5FE);
+$last-task-accent: mat.define-palette(#FAFAFA, A200, A100, A400);
+$last-task-warn: mat.define-palette(mat.$red-palette);
+$last-task-theme: mat.define-light-theme((
+
+  color: (
+    primary: $last-task-primary,
+    accent: $last-task-accent,
+    warn: $last-task-warn,
+  )
+));
+
+@include mat.all-component-themes($last-task-theme);
+

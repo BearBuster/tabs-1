@@ -1,0 +1,16 @@
+.main {
+
+  background: #E0E0E0;
+  padding: 20px;
+  margin: 20px;
+  border: dotted;
+  border-color: #444444;
+}
+
+mat-grid-list {
+  background: white;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
