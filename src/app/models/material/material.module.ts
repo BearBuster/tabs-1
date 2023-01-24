@@ -5,6 +5,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+
 
 
 const MaterialComponents = [
@@ -13,7 +16,9 @@ const MaterialComponents = [
   MatExpansionModule,
   MatTableModule,
   MatIconModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatInputModule,
+  MatSelectModule
 ]
 
 @NgModule({
