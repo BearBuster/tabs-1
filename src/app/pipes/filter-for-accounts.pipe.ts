@@ -7,8 +7,8 @@ import {Account} from "../interfaces/account";
 export class FilterForAccountsPipe implements PipeTransform {
   transform(accounts: Account[], byIbanOrAlias: string, byType: string[], byCompanyName: string[]): Account[] {
     return accounts.filter((account)=>{
-      return (byIbanOrAlias.length? account._iban.includes(byIbanOrAlias) : true)
-      && (byType.length? byType.includes(account._type): true)
+      return (byIbanOrAlias.length? (account._iban.toLowerCase().includes(byIbanOrAlias.toLowerCase()) || account._alias.toLowerCase().includes(byIbanOrAlias.toLowerCase())) : true)
+      && (byType.length? byType.includes(account._type_name): true)
       && (byCompanyName.length? byCompanyName.includes(account._company_name) : true)
     });
   }

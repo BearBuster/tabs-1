@@ -6,7 +6,7 @@
         <input matInput type="text" [(ngModel)]="filter.filterByIbanOrAlias">
       </mat-form-field>
     </mat-grid-tile>
-    <mat-grid-tile colspan="3">
+    <mat-grid-tile colspan="4">
       <mat-form-field appearance="fill">
         <mat-label>Types</mat-label>
         <mat-select [(ngModel)]="filter.filterByType" multiple>
@@ -16,13 +16,7 @@
               (+{{(filter.filterByType?.length || 0) - 1}} {{filter.filterByType?.length === 2 ? 'other' : 'others'}})
             </span>
           </mat-select-trigger>
-          <mat-option [value]="'01'">01</mat-option>
-          <mat-option [value]="'04'">04</mat-option>
-          <mat-option [value]="'05'">05</mat-option>
-          <mat-option [value]="'06'">06</mat-option>
-          <mat-option [value]="'07'">07</mat-option>
-          <mat-option [value]="'18'">18</mat-option>
-          <mat-option [value]="'21'">21</mat-option>
+          <mat-option *ngFor="let typeName of setOfTypenames" [value]="typeName">{{typeName}}</mat-option>
         </mat-select>
       </mat-form-field>
     </mat-grid-tile>
@@ -53,28 +47,24 @@
   </mat-grid-list>
 
   <div *ngFor="let accounts of arr | keyvalue">
-    <mat-expansion-panel class="mb-30" [togglePosition]="'before'" expanded="{{accounts.value.length? 'true': 'false'}}">
-      <mat-expansion-panel-header>
-        <mat-panel-title style="font-weight: bold; padding-top: 5px">
-          {{accounts.key}}
-        </mat-panel-title>
-      </mat-expansion-panel-header>
+    <div *ngIf="(accounts.value | filterForAccounts : filter.filterByIbanOrAlias : filter.filterByType : filter.filterByCompanyName).length">
+      <mat-expansion-panel class="mb-30" [togglePosition]="'before'" expanded="{{accounts.value.length? 'true': 'false'}}">
+        <mat-expansion-panel-header>
+          <mat-panel-title style="font-weight: bold; padding-top: 5px">
+            {{accounts.key}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-      <div *ngIf="!(accounts.value | filterForAccounts : filter.filterByIbanOrAlias : filter.filterByType : filter.filterByCompanyName).length">
-        <mat-grid-list cols="19">
-          <mat-grid-tile colspan="19">No data to represent</mat-grid-tile>
+        <mat-grid-list *ngFor="let account of accounts.value | filterForAccounts : filter.filterByIbanOrAlias : filter.filterByType : filter.filterByCompanyName" cols="19" rowHeight="30px">
+          <mat-grid-tile><mat-icon [ngStyle]="{'color': (account._is_default_account ? '#0288D1' : '')}" >{{account._is_default_account ? 'star' : 'star_outline'}}</mat-icon></mat-grid-tile>
+          <mat-grid-tile colspan="3">{{account._account_naming}}</mat-grid-tile>
+          <mat-grid-tile colspan="3">{{account._company_name}}</mat-grid-tile>
+          <mat-grid-tile colspan="3">{{account._abi_code}}</mat-grid-tile>
+          <mat-grid-tile colspan="3">{{account._iban}}</mat-grid-tile>
+          <mat-grid-tile colspan="3">{{!account._alias ? 'Empty' : account._alias}}</mat-grid-tile>
+          <mat-grid-tile colspan="3">{{!account._currency ? 'Empty' : account._currency}}</mat-grid-tile>
         </mat-grid-list>
-      </div>
-
-      <mat-grid-list *ngFor="let account of accounts.value | filterForAccounts : filter.filterByIbanOrAlias : filter.filterByType : filter.filterByCompanyName" cols="19" rowHeight="30px">
-        <mat-grid-tile><mat-icon [ngStyle]="{'color': (account._is_default_account ? '#0288D1' : '')}" >{{account._is_default_account ? 'star' : 'star_outline'}}</mat-icon></mat-grid-tile>
-        <mat-grid-tile colspan="3">{{account._account_naming}}</mat-grid-tile>
-        <mat-grid-tile colspan="3">{{account._company_name}}</mat-grid-tile>
-        <mat-grid-tile colspan="3">{{account._abi_code}}</mat-grid-tile>
-        <mat-grid-tile colspan="3">{{account._iban}}</mat-grid-tile>
-        <mat-grid-tile colspan="3">{{!account._alias ? 'Empty' : account._alias}}</mat-grid-tile>
-        <mat-grid-tile colspan="3">{{!account._currency ? 'Empty' : account._currency}}</mat-grid-tile>
-      </mat-grid-list>
-    </mat-expansion-panel>
+      </mat-expansion-panel>
+    </div>
   </div>
 </div>

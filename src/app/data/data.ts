@@ -55,7 +55,7 @@ export const data = {
                   "status": "ACTIVE",
                   "type": "01",
                   //
-                  "alias": null,
+                  "alias": 'qwe',
                   "is_passive_bank": false,
                   //
                   "currency": null,

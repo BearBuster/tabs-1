@@ -16,13 +16,16 @@ export class AppComponent implements OnInit{
     filterByType: [],
     filterByCompanyName: []
   }
+
   arr = {
     'Conti Correnti': [],
     'Portafoglio Incassi': [],
     'Finanziamenti': [],
     'Conti Anticipi Esteri': [],
-    'Libertti de risparmio': []
+    'Libertti de risparmio': [],
   }
+
+  setOfTypenames = Object.keys(this.arr);
 
   companyNameSet: Set<string> = new Set<string>()
 
@@ -41,7 +44,7 @@ export class AppComponent implements OnInit{
               }).length){
                 console.log('skip')
               }else{
-                tmpObj.alias = type.alias
+                tmpObj.alias = type.alias? type.alias : ''
                 tmpObj.currency = type.currency
                 tmpObj.account_naming = type.account_naming
                 tmpObj.is_default_account = type.is_default_account
